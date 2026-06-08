@@ -2,26 +2,44 @@ import requests
 
 BASE_URL = "http://127.0.0.1:8000"
 
-
 def ask_ai(prompt):
 
-    response = requests.post(
-        f"{BASE_URL}/generate",
-        json={"prompt": prompt}
-    )
+    try:
 
-    return response.json()
+        response = requests.post(
+            f"{BASE_URL}/generate",
+            json={
+                "prompt": prompt
+            }
+        )
 
+        return response.json()
+
+    except Exception as e:
+
+        return {
+            "success": False,
+            "error": str(e)
+        }
 
 def analyze_resume(file):
 
-    files = {
-        "file": file
-    }
+    try:
 
-    response = requests.post(
-        f"{BASE_URL}/resume-analysis",
-        files=files
-    )
+        files = {
+            "file": file
+        }
 
-    return response.json()
+        response = requests.post(
+            f"{BASE_URL}/resume-analysis",
+            files=files
+        )
+
+        return response.json()
+
+    except Exception as e:
+
+        return {
+            "success": False,
+            "error": str(e)
+        }

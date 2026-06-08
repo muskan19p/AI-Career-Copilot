@@ -1,26 +1,15 @@
 from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
-from dotenv import load_dotenv
-from openai import OpenAI
 from backend.resume_parser import extract_text
 from backend.ai_service import ask_openai
-import os
-
-load_dotenv()
-
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY")
-)
 
 app = FastAPI(
     title="AI Career Copilot",
     version="1.0"
 )
 
-
 class UserPrompt(BaseModel):
     prompt: str
-
 
 @app.get("/")
 def home():
@@ -29,20 +18,18 @@ def home():
         "status": "Running"
     }
 
-
 @app.post("/generate")
 def generate(user_input: UserPrompt):
 
     try:
 
-        response = client.responses.create(
-            model="gpt-4.1-mini",
-            input=user_input.prompt
+        response = ask_openai(
+            user_input.prompt
         )
 
         return {
             "success": True,
-            "response": response.output_text
+            "response": response
         }
 
     except Exception as e:
@@ -51,7 +38,6 @@ def generate(user_input: UserPrompt):
             "success": False,
             "error": str(e)
         }
-
 
 @app.post("/resume-analysis")
 async def resume_analysis(
@@ -63,19 +49,20 @@ async def resume_analysis(
         resume_text = extract_text(file)
 
         prompt = f"""
-        Analyze this resume.
+        Analyze this resume carefully.
 
         Resume:
 
         {resume_text}
 
-        Give:
+        Provide:
 
         1. Strengths
         2. Weaknesses
         3. Missing Skills
-        4. Hiring Chances
-        5. Improvement Suggestions
+        4. ATS Score
+        5. Hiring Chances
+        6. Suggestions
         """
 
         analysis = ask_openai(prompt)

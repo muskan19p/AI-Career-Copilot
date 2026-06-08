@@ -1,64 +1,25 @@
-# AI Career Copilot
+# AI-Career-Copilot
+AI-powered career assistant built with FastAPI, Streamlit, Python, and OpenAI for resume analysis, ATS scoring, job recommendations, interview preparation, and personalized study roadmaps.
 
-AI Career Copilot is a full-stack AI-powered career assistant built with Python, FastAPI, Streamlit, and OpenAI APIs.
+
 
 ## Features
-
-* Resume Analysis
-* ATS Score Checker
-* Job Recommendations
-* Interview Preparation
-* Study Roadmap Generator
-* Career Mentor
-* AI Chatbot
-* Cover Letter Generator
-* LinkedIn Profile Optimizer
+- Resume Analyzer
+- ATS Score Checker
+- Job Recommendations
+- Interview Preparation
+- Study Roadmap Generator
 
 ## Tech Stack
-
-### Backend
-
-* Python
-* FastAPI
-* OpenAI API
-
-### Frontend
-
-* Streamlit
-
-### Tools
-
-* Git
-* GitHub
+- Python
+- FastAPI
+- Streamlit
+- OpenAI API
 
 ## Project Structure
 
-backend/
+## Installation
 
-* API endpoints
-* Resume parsing
-* AI services
+## Usage
 
-frontend/
-
-* Streamlit dashboard
-* Career tools pages
-
-screenshots/
-
-* Project screenshots
-
-## Future Improvements
-
-* User Authentication
-* Database Integration
-* Job Search API Integration
-* Resume Builder
-* AI Mock Interviews
-
-## Author
-
-Muskan
-B.Tech (KUK '26)
-Aspiring Software Engineer
-
+## Future Enhancements
