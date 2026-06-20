@@ -2,6 +2,32 @@ from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
 from backend.resume_parser import extract_text
 from backend.ai_service import ask_openai
+from sqlalchemy.orm import Session
+from fastapi import Depends
+from backend.crud import get_user_history, save_resume_analysis
+from backend.crud import delete_history
+from backend.schemas import (
+    UserCreate,
+    UserLogin
+)
+
+from backend.crud import (
+    create_user,
+    get_user_by_email
+)
+
+from backend.auth import verify_password
+
+from backend.database import (
+    Base,
+    engine,
+    get_db
+)
+
+from backend.schemas import UserCreate
+from backend.crud import create_user
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="AI Career Copilot",
@@ -41,7 +67,9 @@ def generate(user_input: UserPrompt):
 
 @app.post("/resume-analysis")
 async def resume_analysis(
-    file: UploadFile = File(...)
+    user_id: int,
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
 ):
 
     try:
@@ -67,6 +95,14 @@ async def resume_analysis(
 
         analysis = ask_openai(prompt)
 
+        # Save to database
+        save_resume_analysis(
+            db,
+            user_id,
+            resume_text,
+            analysis
+        )
+
         return {
             "success": True,
             "analysis": analysis
@@ -79,3 +115,83 @@ async def resume_analysis(
             "error": str(e)
         }
         
+@app.post("/register")
+def register(
+    user: UserCreate,
+    db: Session = Depends(get_db)
+):
+
+    return create_user(
+        db,
+        user.name,
+        user.email,
+        user.password
+    )
+    
+    
+@app.post("/login")
+def login(
+    user: UserLogin,
+    db: Session = Depends(get_db)
+):
+
+    existing_user = get_user_by_email(
+        db,
+        user.email
+    )
+
+    if not existing_user:
+
+        return {
+            "success": False,
+            "message": "User not found"
+        }
+
+    if not verify_password(
+        user.password,
+        existing_user.password
+    ):
+
+        return {
+            "success": False,
+            "message": "Wrong password"
+        }
+
+    return {
+        "success": True,
+        "message": "Login successful",
+        "user_id": existing_user.id,
+        "name": existing_user.name
+    }
+    
+@app.get("/history/{user_id}")
+def history(
+        user_id: int,
+        db: Session = Depends(get_db)
+):
+
+    data = get_user_history(
+        db,
+        user_id
+    )
+
+    return {
+        "success": True,
+        "history": data
+    }
+    
+ 
+@app.delete("/history/{history_id}")
+def remove_history(
+        history_id: int,
+        db: Session = Depends(get_db)
+):
+
+    deleted = delete_history(
+        db,
+        history_id
+    )
+
+    return {
+        "success": deleted
+    }   
