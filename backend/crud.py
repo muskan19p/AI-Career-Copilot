@@ -1,87 +1,43 @@
 from sqlalchemy.orm import Session
-
 from backend.models import User
-from backend.auth import hash_password
-from backend.models import ResumeHistory
+from backend.auth import hash_password, verify_password
 
-def create_user(
-        db: Session,
-        name: str,
-        email: str,
-        password: str
-):
+# REGISTER
+def create_user(db: Session, name: str, email: str, password: str):
+
+    email = email.strip().lower()
 
     user = User(
         name=name,
         email=email,
         password=hash_password(password)
     )
-    
-def get_user_by_email(
-        db,
-        email
-):
+
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    return user
+
+
+# LOGIN
+def get_user_by_email(db: Session, email: str):
+
+    email = email.strip().lower()
 
     return db.query(User).filter(
         User.email == email
     ).first()
-    
-def save_resume_analysis(
-        db,
-        user_id,
-        resume_text,
-        analysis
-):
 
-    record = ResumeHistory(
-        user_id=user_id,
-        resume_text=resume_text,
-        analysis=analysis
-    )
 
-    db.add(record)
+def authenticate_user(db: Session, email: str, password: str):
 
-    db.commit()
+    user = get_user_by_email(db, email)
 
-    db.refresh(record)
+    if not user:
+        return None
 
-    return record
-
-def get_user_history(
-        db,
-        user_id
-):
-
-    return db.query(
-        ResumeHistory
-    ).filter(
-        ResumeHistory.user_id == user_id
-    ).all()
-    
-def delete_history(
-        db,
-        history_id
-):
-
-    record = db.query(
-        ResumeHistory
-    ).filter(
-        ResumeHistory.id == history_id
-    ).first()
-
-    if not record:
-        return False
-
-    db.delete(record)
-
-    db.commit()
-
-    return True
-
-    db.add(user)
-
-    db.commit()
-
-    db.refresh(user)
+    if not verify_password(password, user.password):
+        return None
 
     return user
