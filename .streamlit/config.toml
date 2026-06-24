@@ -1,6 +1,5 @@
-[theme]
-base="light"
-primaryColor="#2563eb"
-backgroundColor="#f8fafc"
-secondaryBackgroundColor="#ffffff"
-textColor="#0f172a"
+st.set_page_config(
+    page_title="Career OS",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
