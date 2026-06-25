@@ -1,0 +1,37 @@
+Folder PATH listing for volume Local Disk
+Volume serial number is 00000064 52AB:57C4
+D:\USERS\DELL\CAREER-OS\FRONTEND
+³   app.py
+³   
+ÃÄÄÄcomponents
+³       navbar.py
+³       sidebar.py
+³       theme.py
+³       
+ÀÄÄÄpages
+    ³   ats.py
+    ³   chatbot.py
+    ³   dashboard.py
+    ³   history.py
+    ³   jobs.py
+    ³   linkedin.py
+    ³   login.py
+    ³   mentor.py
+    ³   recruiter.py
+    ³   resume.py
+    ³   roadmap.py
+    ³   settings.py
+    ³   
+    ÀÄÄÄ__pycache__
+            ats.cpython-312.pyc
+            chatbot.cpython-312.pyc
+            dashboard.cpython-312.pyc
+            history.cpython-312.pyc
+            jobs.cpython-312.pyc
+            linkedin.cpython-312.pyc
+            login.cpython-312.pyc
+            mentor.cpython-312.pyc
+            resume.cpython-312.pyc
+            roadmap.cpython-312.pyc
+            settings.cpython-312.pyc
+            

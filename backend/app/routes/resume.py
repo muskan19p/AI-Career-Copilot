@@ -5,4 +5,9 @@ router = APIRouter()
 
 @router.post("/analyze")
 def analyze(data: dict):
-    return analyze_resume(data["text"])
+
+    result = analyze_resume(
+        data["text"]
+    )
+
+    return result

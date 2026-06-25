@@ -1,5 +1,8 @@
 import streamlit as st
-from pages import (
+
+from components.theme import apply_theme
+
+from modules import (
     login,
     dashboard,
     resume,
@@ -13,17 +16,54 @@ from pages import (
     linkedin
 )
 
+# -----------------------------------
+# PAGE CONFIG
+# -----------------------------------
+
 st.set_page_config(
     page_title="Career OS",
     page_icon="🚀",
     layout="wide"
 )
 
+apply_theme()
+
+# -----------------------------------
+# SESSION STATE
+# -----------------------------------
+
+if "theme" not in st.session_state:
+    st.session_state.theme = "Dark"
+
+if "history" not in st.session_state:
+    st.session_state.history = []
+
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+
+if "applied_jobs" not in st.session_state:
+    st.session_state.applied_jobs = []
+
+if "ats_count" not in st.session_state:
+    st.session_state.ats_count = 0
+
+if "roadmap_count" not in st.session_state:
+    st.session_state.roadmap_count = 0
+
 if "user" not in st.session_state:
     st.session_state.user = None
 
+# -----------------------------------
+# LOGIN PAGE
+# -----------------------------------
+
 if st.session_state.user is None:
+
     login.show()
+
+# -----------------------------------
+# MAIN APP
+# -----------------------------------
 
 else:
 
@@ -33,8 +73,7 @@ else:
         "Category",
         [
             "Dashboard",
-            "Resume Hub",
-            "Interview Hub",
+            "Tools",
             "Career Center",
             "Account"
         ]
@@ -42,39 +81,44 @@ else:
 
     page = None
 
+    # ---------------- DASHBOARD ----------------
+
     if section == "Dashboard":
+
         page = "Dashboard"
 
-    elif section == "Resume Hub":
+    # ---------------- TOOLS ----------------
+
+    elif section == "Tools":
+
         page = st.sidebar.selectbox(
             "Tools",
             [
                 "Resume Builder",
                 "ATS Checker",
-                "LinkedIn Optimizer"
+                "LinkedIn Optimizer",
+                "AI Chatbot",
+                "AI Mentor"
             ]
         )
 
-    elif section == "Interview Hub":
-        page = st.sidebar.selectbox(
-            "Tools",
-            [
-                "AI Chatbot",
-                "AI Mentor",
-                "Career Roadmap"
-            ]
-        )
+    # ---------------- CAREER CENTER ----------------
 
     elif section == "Career Center":
+
         page = st.sidebar.selectbox(
             "Tools",
             [
                 "Jobs",
+                "Career Roadmap",
                 "Progress Tracker"
             ]
         )
 
+    # ---------------- ACCOUNT ----------------
+
     elif section == "Account":
+
         page = st.sidebar.selectbox(
             "Tools",
             [
@@ -83,41 +127,76 @@ else:
             ]
         )
 
+    # -----------------------------------
+    # USER INFO
+    # -----------------------------------
+
     st.sidebar.divider()
 
+    st.sidebar.success(
+         f"Welcome {st.session_state.user['name']}"
+    )
+
+    st.sidebar.write(
+      st.session_state.user['email']
+    ) 
+
+    st.sidebar.divider()
+
+    # -----------------------------------
+    # LOGOUT
+    # -----------------------------------
+
     if st.sidebar.button("Logout"):
+
         st.session_state.user = None
+
         st.rerun()
 
+    # -----------------------------------
+    # ROUTING
+    # -----------------------------------
+
     if page == "Dashboard":
+
         dashboard.show()
 
     elif page == "Resume Builder":
+
         resume.show()
 
     elif page == "ATS Checker":
+
         ats.show()
 
     elif page == "LinkedIn Optimizer":
+
         linkedin.show()
 
     elif page == "AI Chatbot":
+
         chatbot.show()
 
     elif page == "AI Mentor":
+
         mentor.show()
 
     elif page == "Career Roadmap":
+
         roadmap.show()
 
     elif page == "Jobs":
+
         jobs.show()
 
     elif page == "Progress Tracker":
+
         dashboard.show()
 
     elif page == "History":
+
         history.show()
 
     elif page == "Settings":
+
         settings.show()

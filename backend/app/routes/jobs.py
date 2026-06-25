@@ -2,11 +2,20 @@ from fastapi import APIRouter
 
 router = APIRouter()
 
-@router.get("/")
-def jobs():
+applied_jobs = []
+
+@router.post("/apply")
+def apply_job(data: dict):
+
+    applied_jobs.append(data)
+
     return {
-        "jobs": [
-            {"title": "AI Engineer", "company": "Google"},
-            {"title": "Backend Dev", "company": "Microsoft"}
-        ]
+        "success": True,
+        "message": "Application Submitted Successfully"
     }
+
+
+@router.get("/history")
+def history():
+
+    return applied_jobs

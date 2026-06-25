@@ -51,6 +51,14 @@ def show():
             data = res.json()
 
             if data.get("success"):
-                st.success("Account created 🚀 Now login")
+               st.success(
+                     "Account Created Successfully 🚀"
+                       )
+
+               st.info(
+                     "Please Login"
+                      )
+
+               st.rerun()
             else:
                 st.error("Signup failed")

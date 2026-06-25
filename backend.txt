@@ -1,0 +1,66 @@
+Folder PATH listing for volume Local Disk
+Volume serial number is 00000056 52AB:57C4
+D:\USERS\DELL\CAREER-OS\BACKEND
+³   Dockerfile
+³   requirements.txt
+³   
+ÀÄÄÄapp
+    ³   main.py
+    ³   
+    ÃÄÄÄcore
+    ³   ³   config.py
+    ³   ³   database.py
+    ³   ³   deps.py
+    ³   ³   security.py
+    ³   ³   
+    ³   ÀÄÄÄ__pycache__
+    ³           database.cpython-312.pyc
+    ³           security.cpython-312.pyc
+    ³           
+    ÃÄÄÄmodels
+    ³   ³   job.py
+    ³   ³   progress.py
+    ³   ³   resume.py
+    ³   ³   user.py
+    ³   ³   
+    ³   ÀÄÄÄ__pycache__
+    ³           user.cpython-312.pyc
+    ³           
+    ÃÄÄÄroutes
+    ³   ³   ai.py
+    ³   ³   auth.py
+    ³   ³   dashboard.py
+    ³   ³   jobs.py
+    ³   ³   recruiter.py
+    ³   ³   resume.py
+    ³   ³   user.py
+    ³   ³   
+    ³   ÀÄÄÄ__pycache__
+    ³           ai.cpython-312.pyc
+    ³           auth.cpython-312.pyc
+    ³           dashboard.cpython-312.pyc
+    ³           jobs.cpython-312.pyc
+    ³           recruiter.cpython-312.pyc
+    ³           resume.cpython-312.pyc
+    ³           user.cpython-312.pyc
+    ³           
+    ÃÄÄÄschemas
+    ³       auth.py
+    ³       user.py
+    ³       
+    ÃÄÄÄservices
+    ³   ³   ai_service.py
+    ³   ³   auth_service.py
+    ³   ³   resume_service.py
+    ³   ³   
+    ³   ÀÄÄÄ__pycache__
+    ³           ai_service.cpython-312.pyc
+    ³           auth_service.cpython-312.pyc
+    ³           resume_service.cpython-312.pyc
+    ³           
+    ÃÄÄÄutils
+    ³       helpers.py
+    ³       
+    ÀÄÄÄ__pycache__
+            main.cpython-312.pyc
+            
